@@ -1,0 +1,19 @@
+name: Deploy to Surge
+on:
+  push:
+    branches:
+      - main  # Esto le dice a GitHub que se active al hacer push
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout del codigo
+        uses: actions/checkout@v3
+
+      - name: Instalar Surge
+        run: npm install -g surge
+
+      - name: Desplegar a Surge
+        # Usa un nombre unico, ej: parcial-devops-cjass.surge.sh
+        run: surge ./ tu-dominio-unico.surge.sh --token ${{ secrets.SURGE_TOKEN }}
