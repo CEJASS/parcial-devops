@@ -1,19 +1,26 @@
-name: Deploy to Surge
+name: CI-CD Surge ITLA
+
+# Define que el despliegue se active al hacer push a la rama principal
 on:
   push:
     branches:
-      - main  # Esto le dice a GitHub que se active al hacer push
+      - main  
 
 jobs:
   deploy:
+    # Se ejecuta en un entorno Linux (Ubuntu) por su rapidez y eficiencia
     runs-on: ubuntu-latest
+
     steps:
+      # Paso 1: Descarga el código de tu repositorio
       - name: Checkout del codigo
         uses: actions/checkout@v3
 
-      - name: Instalar Surge
+      # Paso 2: Instala la herramienta Surge en el servidor de GitHub
+      - name: Instalar Surge.sh
         run: npm install -g surge
 
+      # Paso 3: Despliegue automático usando el Secret y un dominio único
       - name: Desplegar a Surge
-        # Usa un nombre unico, ej: parcial-devops-cjass.surge.sh
-        run: surge ./ tu-dominio-unico.surge.sh --token ${{ secrets.SURGE_TOKEN }}
+        # IMPORTANTE: He puesto un nombre de dominio único basado en tu usuario para evitar errores de permisos.
+        run: surge ./ parcial-devops-cjasser.surge.sh --token ${{ secrets.SURGE_TOKEN }}
